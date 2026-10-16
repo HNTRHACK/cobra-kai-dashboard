@@ -1,0 +1,245 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Design system carried over from the UMANG site (deployed CSS):
+   ink / ivory / marigold palette, Instrument Serif display italics,
+   Inter Tight body, .display / .serif-i / .kicker type roles,
+   expo easing, fade-up + screen-in + marquee motion, hairline rules.
+   Extended here with semantic theme tokens and trading data colours.
+   ------------------------------------------------------------------ */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  --color-ink: #0b0a09;
+  --color-ink-2: #141210;
+  --color-ink-3: #22201c;
+  --color-ivory: #f3eee4;
+  --color-ivory-2: #e9e2d4;
+  --color-ivory-3: #d9d0be;
+  --color-marigold: #e0a33a;
+  --color-mist: #a8a196;
+  --color-muted: #595349;
+  --color-success: #2b6a3a;
+  --color-danger: #a8261b;
+
+  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Semantic tokens: light = ivory paper, dark = ink (UMANG default surface). */
+:root {
+  --bg: #f3eee4;
+  --bg-2: #ece6da;
+  --panel: #f8f4ec;
+  --fg: #0b0a09;
+  --fg-2: #2b2823;
+  --fg-muted: #595349;
+  --line: rgb(11 10 9 / 0.14);
+  --line-strong: rgb(11 10 9 / 0.85);
+  --accent: #b5721a;
+  --accent-fill: #e0a33a;
+  --on-accent: #0b0a09;
+  /* data: validated categorical set (dataviz validator, light surface #f3eee4, all-pairs PASS) */
+  --s-original: #b57400;
+  --s-ridge: #2a78d6;
+  --s-selective: #d55181;
+  --s-v2: #d55181;
+  /* polarity pair (validated) */
+  --long: #1a7f55;
+  --short: #c23a3a;
+  --flat: #8c857a;
+  --crash: #c23a3a;
+  --elevated: #b57400;
+  --grid: rgb(11 10 9 / 0.08);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b0a09;
+    --bg-2: #100e0c;
+    --panel: #141210;
+    --fg: #f3eee4;
+    --fg-2: #d9d0be;
+    --fg-muted: #a8a196;
+    --line: rgb(243 238 228 / 0.12);
+    --line-strong: rgb(243 238 228 / 0.8);
+    --accent: #e0a33a;
+    --accent-fill: #e0a33a;
+    --on-accent: #0b0a09;
+    --s-original: #c98500;
+    --s-ridge: #3987e5;
+    --s-selective: #d55181;
+    --s-v2: #d55181;
+    --long: #199e70;
+    --short: #e66767;
+    --flat: #8c857a;
+    --crash: #e66767;
+    --elevated: #c98500;
+    --grid: rgb(243 238 228 / 0.07);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b0a09;
+  --bg-2: #100e0c;
+  --panel: #141210;
+  --fg: #f3eee4;
+  --fg-2: #d9d0be;
+  --fg-muted: #a8a196;
+  --line: rgb(243 238 228 / 0.12);
+  --line-strong: rgb(243 238 228 / 0.8);
+  --accent: #e0a33a;
+  --accent-fill: #e0a33a;
+  --on-accent: #0b0a09;
+  --s-original: #c98500;
+  --s-ridge: #3987e5;
+  --s-selective: #d55181;
+  --s-v2: #d55181;
+  --long: #199e70;
+  --short: #e66767;
+  --flat: #8c857a;
+  --crash: #e66767;
+  --elevated: #c98500;
+  --grid: rgb(243 238 228 / 0.07);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-panel: var(--panel);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-fg-muted: var(--fg-muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-fill: var(--accent-fill);
+  --color-on-accent: var(--on-accent);
+  --color-long: var(--long);
+  --color-short: var(--short);
+  --color-flat: var(--flat);
+}
+
+html {
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01", "cv11";
+  overflow-x: hidden;
+}
+
+/* --- type roles (from UMANG) --- */
+.display {
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  line-height: 0.92;
+}
+.serif-i {
+  font-family: var(--font-serif);
+  letter-spacing: -0.02em;
+  font-style: italic;
+  font-weight: 400;
+}
+.kicker {
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* --- motion (from UMANG) --- */
+@keyframes fade-up {
+  0% { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes screen-in {
+  0% { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes marquee {
+  to { transform: translate(-50%); }
+}
+@keyframes shimmer {
+  to { background-position: -200% 0; }
+}
+.fade-up { animation: fade-up 0.6s var(--ease-expo) both; }
+.screen-in { animation: screen-in 0.45s var(--ease-expo) both; }
+.marquee { animation: marquee 48s linear infinite; }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-2) 0%, var(--line) 50%, var(--bg-2) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+/* hairline underline used by UMANG nav links */
+.link-line {
+  position: relative;
+}
+.link-line::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s var(--ease-expo);
+}
+.link-line:hover::after,
+.link-line[aria-current="page"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-fill);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* subtle paper grain on panels — kept very low to stay recessive */
+.glass {
+  background: color-mix(in oklab, var(--panel) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+}
+
+/* recharts recessive defaults */
+.recharts-cartesian-grid line { stroke: var(--grid); }
+.recharts-text { fill: var(--fg-muted); font-size: 11px; font-family: var(--font-mono); }
+.recharts-cartesian-axis-line, .recharts-cartesian-axis-tick-line { stroke: var(--line); }
+.recharts-surface:focus, .recharts-wrapper:focus, .recharts-sector:focus { outline: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .marquee { animation: none; }
+}
